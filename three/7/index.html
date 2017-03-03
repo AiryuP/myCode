@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转的圆</title>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600" style="border:1px solid red"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    function Chain(opts){
+        for (var key in opts) {
+            this[key] = opts[key];
+        }
+
+        this.draw();
+        this.bindEvents();
+    }
+    Chain.prototype={
+        constructor:Chain,
+        /**
+         * 事件绑定
+         */
+        bindEvents:function(){
+            var self=this;
+
+            canvas.addEventListener("mouseenter",function(){
+                //1、停止之前的定时器
+                clearInterval(self.timer);
+                //2、重新开启一个定时器
+
+                self.timer=setInterval(function(){
+                    //方法调用模式：timerFn方法内部的this指向：self(实例)
+                    self.timerFn();
+                    self.startRadian+=0.01*Math.PI;
+                },80);
+            });
+            canvas.addEventListener("mouseleave",function(){
+                //1、停止之前的定时器
+                clearInterval(self.timer);
+                //2、重新开启一个定时器
+
+                self.timer=setInterval(function(){
+                    //方法调用模式：timerFn方法内部的this指向：self(实例)
+                    self.timerFn();
+                    self.startRadian+=0.01*Math.PI;
+                },20);
+            })
+        },
+
+        timerFn:function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            //1、绘制大圆
+            this.drawBigCircle(this.bigRadius);
+            this.drawBigCircle(this.bigRadius2);
+
+            //2、绘制小圆
+            this.drawSmallCircles(this.startRadian);
+        },
+
+        draw:function(){
+            var self=this;
+
+            this.startRadian=0;
+
+            this.timer=setInterval(function(){
+                self.timerFn();
+
+                self.startRadian+=0.01*Math.PI;
+            },20);
+
+
+        },
+        drawBigCircle:function(bigRadius){
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.arc(this.bigX,this.bigY,bigRadius,0,2*Math.PI);
+            ctx.stroke();
+
+            ctx.restore();
+        },
+
+        /**
+         *
+         * @param num 小圆的个数
+         * @param beginRadian 从该弧度开始绘制第一个小圆，之后根据每个小圆占用的弧度的值绘制后面的小圆
+         */
+        drawSmallCircles:function(beginRadian){
+            //第一组数据
+            var num=this.data.length;
+            for (var i = 0; i < num; i++) {
+                //单个小圆所占用的弧度值
+                var singleRadian=2*Math.PI/num;
+                this.drawSmallCircle(this.data,this.bigRadius,i,beginRadian+=singleRadian,"hotpink");
+
+            }
+            //第二组数据
+            var num2=this.data2.length;
+
+            for (var i = 0; i < num2; i++) {
+                //单个小圆所占用的弧度值
+                var singleRadian=2*Math.PI/num2;
+                this.drawSmallCircle(this.data2,this.bigRadius2,i,beginRadian+=singleRadian,"lightblue");
+
+            }
+        },
+
+        drawSmallCircle:function(data,bigRadius,index,radian,color){
+//            sin radian=h1/bigRadius;
+//            cos radian=b1/bigRadius;
+
+            var h1=bigRadius*Math.sin(radian);
+            var b1=bigRadius*Math.cos(radian);
+            var smallX=this.bigX+b1;
+            var smallY=this.bigY+h1;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(smallX,smallY,this.smallRadius,0,2*Math.PI);
+            ctx.fillStyle=color;
+            ctx.fill();
+
+            ctx.restore();
+
+            //绘制小圆上的文字：
+            ctx.save();
+            ctx.textAlign="center";
+            ctx.textBaseline="middle";
+            ctx.font=this.font;
+            ctx.fillStyle="white";
+            ctx.fillText(data[index],smallX,smallY);
+            ctx.restore();
+
+        }
+    }
+
+
+    var chain=new Chain({
+        data:["前端","UI设计","PHP"],
+        data2:["前端","UI设计","PHP","C++2","JavaEE2","电子商务"],
+        bigX:300,
+        bigY:300,
+        smallRadius:50,
+        bigRadius:150,
+        bigRadius2:250,
+        font:"26px 微软雅黑"
+    });
+
+</script>
+</html>

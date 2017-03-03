@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box {
+            width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            width: 570px;
+            height: 170px;
+            resize: none;
+        }
+
+        li {
+            height: 30px;
+            font-size: 24px;
+            border-bottom: 1px dashed #ccc;
+        }
+        a {
+            float: right;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            //需求1：添加。点击发布按钮，把textarea内部的内容添加到一个新的li中，并产生一个a链接。
+            //步骤：
+            //1.老三步。
+            //2.获取textarea的value值
+            //3.创建一个新li标签，把innerHTML属性赋值为value值+a标签。
+            //4.把li标签添加到ul中。
+
+            //1.老三步。
+            var div = document.getElementsByTagName("div")[0];
+            var textarea = div.children[1];
+            var btn = textarea.nextElementSibling || textarea.nextSibling;
+            var ul = div.lastElementChild || div.lastChild;
+            //2.获取textarea的value值
+            btn.onclick = function () {
+                //一定是点击按钮之后在获取value值。
+                var val = textarea.value;
+
+                //bug2:发布内容不能为空；
+                if(val === "" || val == "国军万岁"){
+                    alert("输入内容不能为空！");
+                    textarea.value = "";
+                    return;
+                }
+                //3.创建一个新li标签，把innerHTML属性赋值为value值+a标签。
+                var newLi = document.createElement("li");
+                newLi.innerHTML = val+"<a href='#'>删除</a>";
+
+                //4.把li标签添加到ul中。(最新发布应该在最上面)
+                //如果ul中没有子元素，用appendChild();如果有元素，那就用insertBefore();
+                if(ul.children.length === 0){
+                    ul.appendChild(newLi);
+                }else{
+                    ul.insertBefore(newLi,ul.children[0]);
+                }
+
+                //bug1：发布完毕，textarea的value值清空。
+                textarea.value = "";
+
+
+
+                //需求2：删除。点击删除a链接，删除所在的li标签。
+                //因为穿件的li标签才存在需要绑定事件的a链接。在页面加载的时候没有。
+                //老三步。
+                var a = newLi.getElementsByTagName("a")[0];
+                a.onclick = function () {
+                    //a链接的爷爷删除a链接的爸爸
+                    //this.parentNode.parentNode.removeChild(this.parentNode);
+                    //ul.removeChild(链接所在的li);
+                    ul.removeChild(this.parentNode);
+
+                    //ul.removeChild(newLi);
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+    <div class="box">
+        <label for="txt">请输入:</label>
+        <textarea id="txt" cols="30" rows="10"></textarea>
+        <button>发布</button>
+        <ul>
+
+        </ul>
+    </div>
+
+</body>
+</html>

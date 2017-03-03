@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600" style="border:1px solid red"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    function Clock(opts) {
+        for (var key in opts) {
+            this[key] = opts[key];
+        }
+        //绘制时钟的入口方法
+        this.draw();
+    }
+    Clock.prototype = {
+        constructor: Clock,
+        /**
+         * 绘制时钟的入口方法
+         */
+        draw: function () {
+            //1、绘制刻度盘:大圆+刻度线
+            this.drawDial();
+        },
+        /**
+         * 绘制刻度盘
+         */
+        drawDial: function () {
+            //1、绘制蓝色的大圆
+            this.drawBigCircle();
+            //2、绘制刻度线
+            this.drawSmallCircles();
+        },
+        /**
+         * 绘制大圆
+         */
+        drawBigCircle: function () {
+            ctx.save();
+
+            ctx.beginPath();
+            ctx.arc(this.bigX, this.bigY, this.bigRadius, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#335F9A";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+
+            ctx.restore();
+        },
+
+        //绘制刻度线
+        drawSmallCircles: function () {
+            for (var i = 0; i < 60; i++) {
+                this.drawLine(i);
+
+            }
+        },
+        /**
+         * 绘制单个刻度线
+         * @param i 刻度线所在的索引
+         */
+        drawLine: function (i) {
+            ctx.save();
+            //计算刻度线的弧度
+            var radian = 2 * Math.PI / 60 * i - 0.5 * Math.PI + Math.PI / 6;
+
+            if (i % 5 == 0) {
+                var h1 = (this.bigRadius - this.bigLength) * Math.sin(radian);
+                var h2 = this.bigRadius * Math.sin(radian);
+                //h3：文字所在的坐标所构成的三角形的高
+                var h3 = (this.bigRadius - this.bigLength - 10) * Math.sin(radian);
+                var b1 = Math.cos(radian) * this.bigRadius;
+                var b2 = Math.cos(radian) * (this.bigRadius - this.bigLength);
+                var b3 = (this.bigRadius - this.bigLength - 10) * Math.cos(radian);
+
+                //绘制文字
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.font = "16px Consolas";
+                ctx.fillText(i / 5 + 1, this.bigX + b3, this.bigY + h3);
+
+                //绘制刻度线
+                ctx.beginPath();
+                ctx.moveTo(this.bigX + b2, this.bigY + h1);
+                ctx.lineTo(this.bigX + b1, this.bigY + h2);
+                ctx.lineWidth = 10;
+                ctx.stroke();
+            } else {
+                var h1 = (this.bigRadius - this.smallLength) * Math.sin(radian);
+                var h2 = this.bigRadius * Math.sin(radian);
+                var b1 = Math.cos(radian) * this.bigRadius;
+                var b2 = Math.cos(radian) * (this.bigRadius - this.smallLength);
+
+                ctx.beginPath();
+                ctx.moveTo(this.bigX + b2, this.bigY + h1);
+                ctx.lineTo(this.bigX + b1, this.bigY + h2);
+                ctx.lineWidth = 5;
+                ctx.stroke();
+            }
+
+
+            ctx.restore();
+        },
+
+    }
+
+    var clock = new Clock({
+        bigX: 300,
+        bigY: 300,
+        bigRadius: 150,
+        smallLength: 15,//小刻度线长度
+        bigLength: 35//大刻度线长度
+    })
+</script>
+</html>

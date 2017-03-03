@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>前端作品列表</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css" media="all"/>
+</head>
+<body>
+
+<div class="wrap shadow">
+    <ol id="ol" class="list">
+
+    </ol>
+</div>
+<div class="auto welcome none">
+    
+</div>
+<script type="text/javascript">
+    var str = '',
+        data = [
+           
+            [
+                { title : '第一章 常用图片相关代码'},
+                { url : 'e/1/index.html', title : '鼠标移动改变图片透明度' },
+                { url : 'e/2/index.html', title : '图片放大镜效果' },
+                { url : 'e/3/index.html', title : '点击图片逐渐放大' }
+            ],
+            [
+                { title : '第二章 内容展示常用代码'},
+                { url : 'e/4/index.html', title : '单元行上鼠标悬停提示' },
+                { url : 'e/5/index.html', title : '无刷新切换皮肤' },
+                { url : 'e/6/index.html', title : '添加或删除表格行' },
+                { url : 'e/7/index.html', title : '模拟滚动条' },
+                { url : 'e/8/index.html', title : '简单的轮播图' },
+                { url : 'e/9/index.html', title : '祝愿墙' },
+                { url : 'e/10/index.html', title : 'Tab栏' },
+                { url : 'e/11/index.html', title : '微博发布栏' }
+            ],
+            [
+                { title : '第三章 简单的JS效果'},
+                { url : 'three/1/index.html', title : '切换水果' },
+                { url : 'three/2/index.html', title : '图片皮肤' },
+                { url : 'three/3/index.html', title : '隐藏盒子' },
+                { url : 'three/4/index.html', title : '返回顶部小火箭' },
+                { url : 'three/5/index.html', title : '匀速动画封装' },
+                { url : 'three/6/index.html', title : '楼层跳跃' },
+                { url : 'three/7/index.html', title : '旋转小球' },
+            ],
+            [
+                { title : '第四章 移动端效果'},
+                { url : 'four/1/index.html', title : '选项卡切换' }
+            ],
+            [
+                { title : '第五章 时间日期效果'},
+                { url : 'five/1/index.html', title : '全日历' },
+                { url : 'five/2/index.html', title : 'canvas实现小时钟1' },
+                { url : 'five/3/index.html', title : 'canvas实现小时钟2' }
+            ],
+            [
+                { title : '第六章 其它练习'},
+                { url : 'other/1/index.html', title : '乘法口诀输出' }
+            ]
+        ];
+    for(var i = 0; i < data.length; i++){
+        var items = data[i];
+        var sub = '';
+        for(var j=0; j<items.length; j++){
+            var son = items[j];
+            if(j == 0){
+                sub += '<li><h1><a href="javascript:;" title="' + son.title + '">' + son.title + '</a></h1><dl class="sub-dl">';
+            } else {
+                sub += '<dd><a href="' + son.url + '" target="_blank" title="' + son.title + '">' + son.title + '</a></dd>';
+            }
+            if(j == items.length - 1){
+                sub += '</dl></li>';
+            }
+        }
+        str += sub;
+    }
+    var ol = document.getElementById('ol');
+    ol.innerHTML = str;
+    var h1 = ol.getElementsByTagName('h1');
+    var dl = ol.getElementsByTagName('dl');
+    var tmp = -1;
+    var open = false;
+    for(var i=0; i < h1.length; i++){
+        h1[i].index = i;
+        h1[i].onclick = function(){
+            for(var i=0; i<h1.length; i++){
+                dl[i].style.display = 'none';
+            }
+            if(tmp == this.index && open){
+                dl[this.index].style.display = 'none';
+                open = false;
+            } else {
+                dl[this.index].style.display = 'block';
+                open = true;
+            }
+            tmp = this.index;
+        }
+    }
+
+</script>
+</body>
+</html>

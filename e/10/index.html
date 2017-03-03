@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .box {
+            width: 500px;
+            height: 400px;
+            margin: 100px auto;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        ul {
+            list-style: none;
+            overflow: hidden;/*清除浮动*/
+        }
+        li {
+            float: left;
+            width: 100px;
+            height: 40px;
+            cursor: pointer;
+            text-align: center;
+            margin-left: -1px;
+            background-color: purple;   
+            border-left: 1px solid #000;
+            font: 700 20px/40px "simsun";
+        }
+        span {
+            display: none;
+            width: 500px;
+            height: 360px;
+            text-align: center;
+            font: 700 60px/360px "simsun";
+            background-color: pink;
+        }
+        i {
+            color: red;
+        }
+        .current {
+            background-color: yellow;
+            color: red;
+        }
+        .show {
+            display: block;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            //需求：鼠标放入哪个li上面，该li变色，然后对应的span显示，其他的隐藏。
+            //步骤：
+            //1.获取事件源和相关元素
+            //2.绑定事件
+            //3.书写事件驱动程序
+
+            //1.获取事件源和相关元素
+            var box = document.getElementsByClassName("box")[0];
+            var liArr = box.getElementsByTagName("li");
+            var spArr = box.getElementsByTagName("span");
+            //2.绑定事件(for循环绑定)
+            for(var i=0;i<liArr.length;i++){
+                //绑定每一个盒子li的索引值；
+                liArr[i].index = i;
+                liArr[i].onmouseover = function () {
+                    //3.书写事件驱动程序
+                    //点亮盒子，排他思想
+                    for(var j=0;j<liArr.length;j++){
+                        liArr[j].className = "";
+                        //排他思想，干掉所有的span，然后才能显示指定的span
+                        spArr[j].className = "";
+                    }
+                    //点亮
+                    this.className = "current";
+                    //显示span
+                    spArr[this.index].className = "show";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="box">
+        <ul>
+            <li class="current">鞋子</li>
+            <li>裤子</li>
+            <li>袜子</li>
+            <li>帽子</li>
+            <li>裙子</li>
+        </ul>
+        <span class="show">我是<i>鞋子</i>内容区</span>
+        <span>我是<i>裤子</i>内容区</span>
+        <span>我是<i>袜子</i>内容区</span>
+        <span>我是<i>帽子</i>内容区</span>
+        <span>我是<i>裙子</i>内容区</span>
+    </div>
+
+
+
+</body>
+</html>

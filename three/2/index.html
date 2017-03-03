@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        ul {
+            list-style: none;
+            height: 200px;
+            padding-left: 120px;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        li {
+            float: left;
+            cursor: pointer;
+            margin: 36px 10px;
+        }
+        body {
+            background: url("image/1.jpg") no-repeat;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            //需求：鼠标放到li上面，body的背景变为该图片。
+            //步骤：
+            //1.获取事件源和相关元素
+            //2.绑定事件
+            //3.书写事件驱动程序
+
+
+            //1.获取事件源和相关元素
+            var ul = document.getElementById("ul");
+            var liArr = ul.children;
+            var body = document.body;
+            //2.绑定事件(for循环)
+            for(var i=0;i<liArr.length;i++){
+                //绑定属性
+                liArr[i].index = i;
+                liArr[i].onclick = function () {
+                    //3.书写事件驱动程序
+                    //body.style.background = "url(\"image/"+(this.index+1)+".jpg\") no-repeat";
+                    body.style.backgroundImage = "url(image/"+(this.index+1)+".jpg)";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <ul id="ul">
+        <li><img src="image/1.jpg" alt="" width="200"/></li>
+        <li><img src="image/2.jpg" alt="" width="200"/></li>
+        <li><img src="image/3.jpg" alt="" width="200"/></li>
+        <li><img src="image/4.jpg" alt="" width="200"/></li>
+        <li><img src="image/5.jpg" alt="" width="200"/></li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            cursor: pointer;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+
+
+    <script>
+        //隐藏盒子
+        document.getElementsByTagName("div")[0].onclick = function () {
+            //隐藏盒子1。不占位置。
+            this.style.display = "none";
+
+            //隐藏盒子2。占位置。
+            //this.style.visibility = "hidden";
+
+            //隐藏盒子3。占位置。
+            //this.style.opacity = 0;
+
+            //隐藏盒子4。不占位置。
+            //this.style.position = "absolute";
+            //this.style.left = "-99999px";
+        }
+    </script>
+</body>
+</html>

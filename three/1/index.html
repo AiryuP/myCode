@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        select {
+            width: 180px;
+            height: 260px;
+            font-size: 18px;
+            margin: 0 20px;
+            background-color: #64ff57;
+        }
+        input {
+            width: 50px;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            //需求1：点击一侧input按钮，让一侧的所有option元素移动到另外一边的select标签中。
+            //步骤：
+            //1.老三步。（两个按钮，各绑定一次事件）
+            //2.获取一侧的所有option
+            //3.添加到另外一个select标签中。
+
+            //1.老三步。
+            var sel1 = document.getElementById("sel1");
+            var sel2 = document.getElementById("sel2");
+            var inpArr = document.getElementsByTagName("input");
+            //2.获取一侧的所有option(点击按钮后在获取)
+            inpArr[0].onclick = function () {
+                var optArr = sel1.children;
+                //3.添加到另外一个select标签中。(用for循环添加)
+                for(var i=optArr.length-1;i>=0;i--){
+                    //因为数组中的元素每移动到另一边一个，数组的长度就减少1，判断添加就不能是数组的长度了。
+                    sel2.appendChild(optArr[0]);
+                }
+            }
+
+            //2.获取一侧的所有option(点击按钮后在获取)
+            inpArr[1].onclick = function () {
+                var optArr = sel2.children;
+                //3.添加到另外一个select标签中。(用for循环添加)
+                for(var i=optArr.length-1;i>=0;i--){
+                    //因为数组中的元素每移动到另一边一个，数组的长度就减少1，判断添加就不能是数组的长度了。
+                    sel1.appendChild(optArr[0]);
+                }
+            }
+
+
+            //需求2：点击一侧input按钮，让一侧选中的（selected属性为true的）option元素移动到另外一边的select标签中。
+            //步骤：
+            //1.老三步。（两个按钮，各绑定一次事件）
+            //2.获取一侧的所有option
+            //3.只有selected属性被选中的标签，添加到另外一个select标签中。
+
+
+            //2.获取一侧的所有option(点击按钮后在获取)
+            inpArr[2].onclick = function () {
+                var optArr = sel1.children;
+                //3.添加到另外一个select标签中。(用for循环添加)
+                for(var i=optArr.length-1;i>=0;i--){
+                    //判断：//3.只有selected属性被选中的标签，添加到另外一个select标签中。
+                    if(true == optArr[i].selected){
+                        //添加到另一侧，不能为选中状态
+                        optArr[i].selected = false;
+                        //因为数组中的元素每移动到另一边一个，数组的长度就减少1，判断添加就不能是数组的长度了。
+                        sel2.appendChild(optArr[i]);
+                    }
+                }
+            }
+
+
+            //2.获取一侧的所有option(点击按钮后在获取)
+            inpArr[3].onclick = function () {
+                var optArr = sel2.children;
+                //3.添加到另外一个select标签中。(用for循环添加)
+                for(var i=optArr.length-1;i>=0;i--){
+                    //判断：//3.只有selected属性被选中的标签，添加到另外一个select标签中。
+                    if(true == optArr[i].selected){
+                        //添加到另一侧，不能为选中状态
+                        optArr[i].selected = false;
+                        //因为数组中的元素每移动到另一边一个，数组的长度就减少1，判断添加就不能是数组的长度了。
+                        sel1.appendChild(optArr[i]);
+                    }
+                }
+            }
+
+
+        }
+    </script>
+
+
+</head>
+<body>
+
+    <select id="sel1" size="2" multiple>
+        <option value="0">香蕉</option>
+        <option value="1">苹果</option>
+        <option value="2">鸭梨</option>
+        <option value="3">榴莲</option>
+    </select>
+
+    <input type="button" value=">>>"/>
+    <input type="button" value="<<<"/>
+    <input type="button" value=">"/>
+    <input type="button" value="<"/>
+
+    <select id="sel2" size="2" multiple>
+
+    </select>
+
+
+
+</body>
+</html>
