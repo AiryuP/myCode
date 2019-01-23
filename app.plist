@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>items</key>
+    <array>
+      <dict>
+        <key>assets</key>
+        <array>
+          <dict>
+            <key>kind</key>
+            <string>software-package</string>
+            <key>url</key>
+            <!-- <string>http://dn168.net/img/apk/IOSPatrol.ipa(安装包地址,最好是https开头)</string> -->
+            <string>http://101.201.80.22:9011/files/apk/tour.ipa</string>
+          </dict>
+          <dict>
+            <key>kind</key>
+            <string>full-size-image</string>
+            <key>needs-shine</key>
+            <true/>
+            <key>url</key>
+            <!-- <string>http://dn168.net/img/apk/logo.png(你app的logo地址)</string> -->
+            <string>http://101.201.80.22:9011/files/apkimg/57.png</string>
+          </dict>
+          <dict>
+            <key>kind</key>
+            <string>display-image</string>
+            <key>needs-shine</key>
+            <true/>
+            <key>url</key>
+            <string>http://101.201.80.22:9011/files/apkimg/57.png</string>
+          </dict>
+        </array>
+        <key>metadata</key>
+        <dict>
+          <key>bundle-identifier</key>
+          <string>zxyt.zhly</string>
+          <key>bundle-version</key>
+          <string>0.0.1</string>
+          <key>kind</key>
+          <string>software</string>
+          <key>title</key>
+          <string>tour</string>
+        </dict>
+      </dict>
+    </array>
+  </dict>
+</plist>
